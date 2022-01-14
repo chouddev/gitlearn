@@ -10,6 +10,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import io.cucumber.java.en.And;
@@ -249,18 +250,32 @@ try {
 @When("^I click on the Search Icon$")
 public void i_click_on_the_search_icon() throws Throwable {
 	wd.findElement(By.xpath("//i[@class='icon icon-magnifier']")).click();
-	wd.findElement(By.xpath("//input[@type='search' and @placeholder='Search Here..']")).sendKeys("Lycowerg");
-	WebElement wb=wd.findElement(By.xpath("//*[@id=\"header-search\"]/div/div/div/div/form/button/i"));
-	JavascriptExecutor js = (JavascriptExecutor)wd; 
-	js.executeScript("arguments[0].click();",wb);
+	
 	}
 
 @Then("^I search Lycowerg$")
 public void i_search_lycowerg() throws Throwable {
-    int xp=wd.findElements(By.xpath("//h2[contains(text(),'Lycowerg Q – CoQ10 & Lycopene')]")).size();
-    System.out.println("The No of elements are"+xp);    
+   // int xp=wd.findElements(By.xpath("//h2[contains(text(),'Lycowerg Q – CoQ10 & Lycopene')]")).size();
+    //System.out.println("The No of elements are"+xp);
+	wd.findElement(By.xpath("//input[@type='search' and @placeholder='Search Here..']")).sendKeys("Lycowerg");
+    WebElement wb=wd.findElement(By.xpath("//*[@id=\"header-search\"]/div/div/div/div/form/button/i"));
+	JavascriptExecutor js = (JavascriptExecutor)wd; 
+	js.executeScript("arguments[0].click();",wb);
+}
+
+
+@Then("^I search product$")
+public void i_search_product() throws Throwable
+{
+	WebElement element=wd.findElement(By.xpath("//input[@type='search']"));
+	Actions action= new Actions(wd);
+	action.keyDown(element,Keys.SHIFT).sendKeys("TRILAX").keyUp(Keys.SHIFT).perform();
+	wait(500);
+	System.out.println("This is done nicely");
 }
 }
+
+
 
 
 
